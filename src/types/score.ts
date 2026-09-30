@@ -2,6 +2,7 @@ export interface Score {
   id: number
   userId: number
   userFullName: string
+  photoUrl?: string | null
   wodId: number
   wodName: string
   completed: boolean

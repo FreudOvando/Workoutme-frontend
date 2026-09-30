@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { getScore, saveOrUpdateScore } from '@/api/scores'
+import { getScore, getScoresByWod, saveOrUpdateScore } from '@/api/scores'
 import { getErrorMessage } from '@/lib/errors'
 import type { ScorePayload } from '@/types/score'
 
@@ -13,12 +13,22 @@ export function useScore(userId: number, wodId: number) {
   })
 }
 
+export function useWodScores(wodId: number) {
+  return useQuery({
+    queryKey: ['scores', 'wod', wodId],
+    queryFn: () => getScoresByWod(wodId),
+    enabled: !!wodId,
+  })
+}
+
 export function useSaveScore(userId: number, wodId: number) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (payload: ScorePayload) => saveOrUpdateScore(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['scores', userId, wodId] })
+      queryClient.invalidateQueries({ queryKey: ['scores', 'wod', wodId] })
+      queryClient.invalidateQueries({ queryKey: ['wods'] })
       toast.success('Puntaje guardado correctamente')
     },
     onError: (error) => toast.error(getErrorMessage(error)),

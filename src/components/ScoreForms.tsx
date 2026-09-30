@@ -13,11 +13,14 @@ export function ScoreForm({ wodId, onClose }: { wodId: number; onClose: () => vo
 
   const [completed, setCompleted] = useState(false)
   const [result, setResult] = useState('')
+  const [category, setCategory] = useState<'AVANZADO' | 'ESCALADO' | ''>('')
 
   useEffect(() => {
     if (existingScore) {
       setCompleted(existingScore.completed)
-      setResult(existingScore.result ?? '')
+      const categoryMatch = existingScore.result?.match(/^\[(AVANZADO|ESCALADO)\]\s*/)
+      setCategory((categoryMatch?.[1] as 'AVANZADO' | 'ESCALADO' | undefined) ?? '')
+      setResult(existingScore.result?.replace(/^\[(AVANZADO|ESCALADO)\]\s*/, '') ?? '')
     }
   }, [existingScore])
 
@@ -28,7 +31,7 @@ export function ScoreForm({ wodId, onClose }: { wodId: number; onClose: () => vo
         userId: user!.id,
         wodId,
         completed,
-        result: result.trim() ? result.trim() : null,
+        result: result.trim() ? `[${category}] ${result.trim()}` : null,
       },
       { onSuccess: onClose },
     )
@@ -40,6 +43,20 @@ export function ScoreForm({ wodId, onClose }: { wodId: number; onClose: () => vo
 
   return (
     <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3 border-t border-zinc-800 pt-4">
+      <label className="flex flex-col gap-1.5 text-sm text-zinc-300">
+        Categoría
+        <select
+          required
+          value={category}
+          onChange={(e) => setCategory(e.target.value as 'AVANZADO' | 'ESCALADO' | '')}
+          className={inputStyles}
+        >
+          <option value="" disabled>Selecciona tu categoría</option>
+          <option value="AVANZADO">Avanzado</option>
+          <option value="ESCALADO">Escalado</option>
+        </select>
+      </label>
+
       <label className="flex items-center gap-2 text-sm text-zinc-300">
         <input
           type="checkbox"
@@ -58,10 +75,10 @@ export function ScoreForm({ wodId, onClose }: { wodId: number; onClose: () => vo
         className={inputStyles}
       />
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           type="submit"
-          disabled={saveScore.isPending}
+          disabled={saveScore.isPending || !category}
           className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-bold text-zinc-950 transition hover:bg-orange-400 disabled:opacity-60"
         >
           {saveScore.isPending ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}

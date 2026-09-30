@@ -6,6 +6,7 @@ import { WodListPage } from '@/pages/WodListPages'
 import { WodFormPage } from '@/pages/WodFormPages'
 import { RegisterPage } from '@/pages/RegisterPages'
 import { LoginPage } from '@/pages/LoginPages'
+import { ProfilePage } from '@/pages/ProfilePage'
 
 export default function App() {
   return (
@@ -16,6 +17,8 @@ export default function App() {
 
         <Route element={<RequireAuth />}>
           <Route path="/" element={<WodListPage />} />
+          <Route path="/history" element={<WodListPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
 
           <Route element={<RequireAdmin />}>
             <Route path="/wods/new" element={<WodFormPage />} />

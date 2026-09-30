@@ -33,13 +33,13 @@ export function WodCard({ wod, onDelete }: WodCardProps) {
         {wod.description}
       </p>
 
-      <div className="mt-5 flex items-center justify-between border-t border-zinc-800 pt-4">
+      <div className="mt-5 flex flex-col gap-3 border-t border-zinc-800 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <span className="flex items-center gap-1.5 text-sm text-zinc-500">
           <User size={14} />
           Coach {wod.coachName}
         </span>
 
-        <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <button
             onClick={() => setShowScoreForm((prev) => !prev)}
             className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-orange-400 hover:bg-orange-500/10"
@@ -48,7 +48,7 @@ export function WodCard({ wod, onDelete }: WodCardProps) {
             Registrar mi puntaje
           </button>
 
-          <div className="flex items-center gap-1 opacity-0 transition group-hover:opacity-100">
+          <div className="flex items-center gap-1 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
             <Link
               to={`/wods/${wod.id}/edit`}
               className="rounded-lg p-2 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100"

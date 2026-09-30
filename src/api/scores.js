@@ -7,3 +7,7 @@ export async function getScore(userId, wodId) {
     const { data } = await apiClient.get(`/scores/user/${userId}/wod/${wodId}`);
     return data;
 }
+export async function getScoresByWod(wodId) {
+    const { data } = await apiClient.get(`/scores/wod/${wodId}`);
+    return data;
+}

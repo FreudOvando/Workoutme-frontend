@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { CalendarDays, House, LogOut, Plus, UserRound } from 'lucide-react'
+import { CalendarDays, House, LogOut, Plus, Trophy, UserRound } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
 export function Layout() {
@@ -62,6 +62,7 @@ export function Layout() {
             {[
               { to: '/', label: 'Principal', icon: House, end: true },
               { to: '/history', label: 'Historial', icon: CalendarDays },
+              { to: '/competitions', label: 'Competencias', icon: Trophy },
               { to: '/profile', label: 'Mi perfil', icon: UserRound },
             ].map(({ to, label, icon: Icon, end }) => (
               <NavLink

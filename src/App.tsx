@@ -7,6 +7,8 @@ import { WodFormPage } from '@/pages/WodFormPages'
 import { RegisterPage } from '@/pages/RegisterPages'
 import { LoginPage } from '@/pages/LoginPages'
 import { ProfilePage } from '@/pages/ProfilePage'
+import { CompetitionListPage } from '@/pages/CompetitionListPage'
+import { CompetitionFormPage } from '@/pages/CompetitionFormPage'
 
 export default function App() {
   return (
@@ -19,10 +21,13 @@ export default function App() {
           <Route path="/" element={<WodListPage />} />
           <Route path="/history" element={<WodListPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/competitions" element={<CompetitionListPage />} />
 
           <Route element={<RequireAdmin />}>
             <Route path="/wods/new" element={<WodFormPage />} />
             <Route path="/wods/:id/edit" element={<WodFormPage />} />
+            <Route path="/competitions/new" element={<CompetitionFormPage />} />
+            <Route path="/competitions/:id/edit" element={<CompetitionFormPage />} />
           </Route>
         </Route>
       </Route>

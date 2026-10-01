@@ -1,0 +1,25 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { CompetitionForm } from '@/components/CompetitionForm';
+import { useCompetition, useCreateCompetition, useUpdateCompetition } from '@/hooks/useCompetitions';
+export function CompetitionFormPage() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const isEditing = Boolean(id);
+    const competitionId = Number(id);
+    const { data: competition, isLoading } = useCompetition(competitionId);
+    const createCompetition = useCreateCompetition();
+    const updateCompetition = useUpdateCompetition(competitionId);
+    const mutation = isEditing ? updateCompetition : createCompetition;
+    const defaultValues = competition
+        ? { name: competition.name, competitionDate: competition.competitionDate }
+        : undefined;
+    function handleSubmit(values) {
+        mutation.mutate(values, { onSuccess: () => navigate('/competitions') });
+    }
+    if (isEditing && isLoading) {
+        return _jsx("p", { className: "text-center text-zinc-500", children: "Cargando competencia\u2026" });
+    }
+    return (_jsxs("div", { children: [_jsxs(Link, { to: "/competitions", className: "mb-6 inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-300", children: [_jsx(ArrowLeft, { size: 16 }), "Volver a competencias"] }), _jsx("h1", { className: "mb-6 text-2xl font-bold text-zinc-50", children: isEditing ? 'Editar competencia' : 'Nueva competencia' }), _jsx(CompetitionForm, { defaultValues: defaultValues, onSubmit: handleSubmit, isSubmitting: mutation.isPending, submitLabel: isEditing ? 'Guardar cambios' : 'Crear competencia' })] }));
+}

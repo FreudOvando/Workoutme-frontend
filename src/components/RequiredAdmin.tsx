@@ -8,7 +8,8 @@ export function RequireAdmin() {
     return <Navigate to="/login" replace />
   }
 
-  if (user.role !== 'ADMIN') {
+  const userRole = user.role?.toUpperCase()
+  if (userRole !== 'ADMIN' && userRole !== 'ADMINISTRATOR') {
     return <Navigate to="/" replace />
   }
 

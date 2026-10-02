@@ -18,6 +18,12 @@ const inputStyles =
 const labelStyles = 'mb-1.5 block text-sm font-medium text-zinc-300'
 const errorStyles = 'mt-1 text-sm text-red-400'
 
+function toLocalDateInputValue(date: Date) {
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${date.getFullYear()}-${month}-${day}`
+}
+
 export function WodForm({ defaultValues, onSubmit, isSubmitting, submitLabel }: WodFormProps) {
   const {
     register,
@@ -27,7 +33,7 @@ export function WodForm({ defaultValues, onSubmit, isSubmitting, submitLabel }: 
     resolver: zodResolver(wodSchema),
     defaultValues: {
       name: '',
-      publicationDate: new Date().toISOString().slice(0, 10),
+      publicationDate: toLocalDateInputValue(new Date()),
       coachName: '',
       type: undefined,
       description: '',

@@ -10,6 +10,7 @@ import { ProfilePage } from "@/pages/ProfilePage";
 import { CompetitionListPage } from "@/pages/CompetitionListPage";
 import { CompetitionFormPage } from "@/pages/CompetitionFormPage";
 import { CompetitionDetailPage } from "@/pages/CompetitionDetailPage";
+import { BillingPage } from '@/pages/BillingPage'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/history" element={<WodListPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/competitions" element={<CompetitionListPage />} />
+          <Route path="/billing" element={<BillingPage />} />
 
           <Route element={<RequireAdmin />}>
             <Route path="/wods/new" element={<WodFormPage />} />

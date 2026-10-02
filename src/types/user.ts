@@ -7,6 +7,7 @@ export interface User {
   email: string
   role: UserRole
   photoUrl?: string | null
+  monthlyFee?: number | null
 }
 
 export interface LoginPayload {

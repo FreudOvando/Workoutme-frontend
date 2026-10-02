@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { CalendarDays, House, LogOut, Plus, Trophy, UserRound } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
+import { MembershipBadge } from '@/components/MembershipBadge'
+import { CalendarDays, CreditCard, House, LogOut, Plus, Trophy, UserRound } from 'lucide-react'
 
 export function Layout() {
   const { user, logout } = useAuth()
@@ -31,13 +32,18 @@ export function Layout() {
                     Nuevo WOD
                   </Link>
                 )}
+
+                <MembershipBadge />
+
                 <span className="text-sm text-zinc-400">
                   Hola, <span className="font-semibold text-zinc-200">{user.firstName}</span>
                 </span>
+
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-1.5 rounded-lg p-2 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100"
                   aria-label="Cerrar sesión"
+                  type="button"
                 >
                   <LogOut size={18} />
                 </button>
@@ -63,6 +69,7 @@ export function Layout() {
               { to: '/', label: 'Principal', icon: House, end: true },
               { to: '/history', label: 'Historial', icon: CalendarDays },
               { to: '/competitions', label: 'Competencias', icon: Trophy },
+              { to: '/billing', label: 'Facturación', icon: CreditCard },
               { to: '/profile', label: 'Mi perfil', icon: UserRound },
             ].map(({ to, label, icon: Icon, end }) => (
               <NavLink

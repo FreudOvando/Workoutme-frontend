@@ -8,12 +8,17 @@ import { WOD_TYPE_LABELS } from '@/lib/wodType';
 const inputStyles = 'w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500';
 const labelStyles = 'mb-1.5 block text-sm font-medium text-zinc-300';
 const errorStyles = 'mt-1 text-sm text-red-400';
+function toLocalDateInputValue(date) {
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${day}`;
+}
 export function WodForm({ defaultValues, onSubmit, isSubmitting, submitLabel }) {
     const { register, handleSubmit, formState: { errors }, } = useForm({
         resolver: zodResolver(wodSchema),
         defaultValues: {
             name: '',
-            publicationDate: new Date().toISOString().slice(0, 10),
+            publicationDate: toLocalDateInputValue(new Date()),
             coachName: '',
             type: undefined,
             description: '',

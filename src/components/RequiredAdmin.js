@@ -6,7 +6,8 @@ export function RequireAdmin() {
     if (!user) {
         return _jsx(Navigate, { to: "/login", replace: true });
     }
-    if (user.role !== 'ADMIN') {
+    const userRole = user.role?.toUpperCase();
+    if (userRole !== 'ADMIN' && userRole !== 'ADMINISTRATOR') {
         return _jsx(Navigate, { to: "/", replace: true });
     }
     return _jsx(Outlet, {});
